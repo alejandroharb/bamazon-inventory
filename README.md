@@ -1,5 +1,7 @@
 # Bamazon Inventory App
+
 **Back-End Technologies:** Node.js, Express
+
 **Database:** MySQL
 
 ## Three Features
