@@ -29,7 +29,7 @@ inquirer.prompt(
                 addInventory();
                 break;
             case "Add New Product":
-                //function
+                addNewItem();
                 break;
         }
     })
@@ -64,7 +64,7 @@ function addInventory() {
     inquirer.prompt([
         {
             type: 'input',
-            message: 'To which item would you like to add inventory?',
+            message: 'To which item would you like to add inventory? Enter Item ID',
             name: 'addItem'
         },{
             type: 'input',
@@ -81,9 +81,50 @@ function addInventory() {
                     [{stock_quantity: updatedQuantity},{item_id: itemID}],
                     function(err,res) {
                     if(err) throw err;
-                    console.log("\n\nUpdate Inventory stock for item #" + itemID + " to a total of " + updatedQuantity + " units!\n\n")
+                    console.log("\n\nUpdated Inventory stock for item #" + itemID + " to a total of " + updatedQuantity + " units!\n\n")
                     displayTable()
                 });
+            })
+
+        })
+}
+
+function addNewItem() {
+    inquirer.prompt([
+        {
+            type: 'input',
+            message: 'Enter the name of the item you would like to add',
+            name: 'newItem'
+        },
+        {
+            type: 'input',
+            message: 'Enter the Price for this new item: ',
+            name: 'price'
+        },
+        {
+            type: 'input',
+            message: 'Enter department for this new item: ',
+            name: 'department'
+        },
+        {
+            type: 'input',
+            message: 'How much inventory would you like to add?',
+            name: 'addQuantity'
+        }]).then(function(response) {
+            var newItem = response.newItem;
+            var addQuantity = response.addQuantity;
+            var department = response.department;
+            var price = response.price;
+            connection.query('INSERT INTO products SET ?',
+                {
+                    product_name: newItem,
+                    department_name: department,
+                    price: price,
+                    stock_quantity: addQuantity
+                }, function(err,res) {
+                if(err) throw err;
+                console.log("\n\nAdded new item: " + newItem + " with  " + addQuantity + " units!\n\n")
+                displayTable();
             })
 
         })
