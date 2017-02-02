@@ -16,5 +16,7 @@
 3. Supervisor Feature
     * See Department Data
     * Create New Department
+
+
 ###Link to Demo Video
 [Vimeo video!](https://vimeo.com/202274721)
